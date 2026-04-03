@@ -1,15 +1,16 @@
 import { useState } from 'react'
 import './App.css'
+import Header from './components/Header/Header'
+import Footer from './components/Footer/Footer'
+import LogIn from './components/LogIn/LogIn'
 
 function App() {
 
   return (
     <>
-      <div className="h-screen flex items-center justify-center bg-black">
-      <h1 className="text-4xl font-bold text-green-400">
-        Tailwind v4 Working 🚀
-      </h1>
-    </div>
+    {/* <Header />
+    <Footer />
+    <LogIn/>   */}
     </>
   )
 }
