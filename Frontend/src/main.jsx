@@ -9,6 +9,7 @@ import Main from './components/Main/Main'
 import LogIn from './components/LogIn/LogIn.jsx'
 import SignUp from './components/SignUp/SignUp'
 import Root from './Root'
+import Thanku from './components/SignUp/Thanku.jsx'
 
 
 
@@ -18,6 +19,7 @@ const router = createBrowserRouter(
       <Route index element={<Main />} />
       <Route path='login' element={<LogIn />} />
       <Route path='signup' element={<SignUp />} />
+      <Route path='thanku' element={<Thanku />} />
     </Route> 
   )
 )

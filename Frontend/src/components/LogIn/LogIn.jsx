@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
+import { useNavigate } from "react-router-dom";
+
 const LogIn = () => {
   const [form, setForm] = useState({
     email: "",
@@ -14,9 +16,34 @@ const LogIn = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login Data:", form);
+    // console.log("Login Data:", form);
+    // navigate("/thanku")
+
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/login/", {
+        method:"POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body : JSON.stringify(form),
+      })
+      const data = await res.json()
+
+      if (res.ok){
+        alert("Login Successful ✅");
+
+        localStorage.setItem("user", JSON.stringify(data))
+        navigate("/thanku")
+      }else{alert(data.error || "Login Failed")}
+    }catch(err){
+      console.error("Login Error : ", err);
+      
+    }
+
   };
 
   return (

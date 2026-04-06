@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaImage } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
+import { useNavigate } from "react-router-dom";
+
 const SignUp = () => {
   const [form, setForm] = useState({
     name: "",
@@ -25,6 +27,10 @@ const SignUp = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+
+  const navigate = useNavigate();
+
+
   // Image upload
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -33,9 +39,14 @@ const SignUp = () => {
     if (file) {
       setPreview(URL.createObjectURL(file));
     }
+    try{
+      
+    }catch(err){
+      console.error("SignUp error : ", err);
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (form.password !== form.confirmPassword) {
@@ -43,7 +54,44 @@ const SignUp = () => {
       return;
     }
 
-    console.log("Signup Data:", form);
+    // console.log("Signup Data:", form);
+
+    const formData = new FormData();
+    formData.append("name", form.name);
+    formData.append("email", form.email);
+    formData.append("password", form.password);
+    formData.append("confirmPassword", form.confirmPassword);
+
+    if (form.image){
+      formData.append("image", form.image);
+    }
+
+    try{
+      const res = await fetch("http://127.0.0.1:8000/api/signup/", {
+        method: "POST",
+        body: formData,
+      });
+
+      // const data = await res.json();
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        data = { error: "Server error (not JSON)" };
+      }
+
+      if(res.ok){
+        alert("Account created Successfully! ✅");
+        navigate("/login")
+        console.log(data);
+      }else{
+        alert("Signup failed: " + data.error);
+        console.log(data);
+      }
+    } catch(err){
+      console.error("Signup Error : ", err);
+      alert("Signup Failed: " + (err.message || "Unknown error"));
+    }
   };
 
   return (
