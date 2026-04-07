@@ -98,13 +98,17 @@ const SignUp = () => {
     <div className="relative h-screen w-full flex items-center justify-center -mt-20">
 
       {/* Background */}
-      <div className="absolute inset-0">
+      {/* <div className="absolute inset-0">
         <img
           src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
           alt="bg"
           className="w-full h-full object-cover"
         />
-      </div>
+      </div> */}
+
+      {/* <div className="absolute inset-0 bg-gradient-to-br from-[#2b2d42] via-[#3a3d5c] to-[#1a1c2c]"></div> */}
+
+      <div className="absolute inset-0 bg-gradient-to-br from-[#3b0a1e] via-[#7b1e3a] to-[#ff4d6d]"></div>
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/70"></div>
@@ -213,7 +217,7 @@ const SignUp = () => {
           {/* Button */}
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 py-2 rounded-lg font-semibold transition shadow-lg"
+            className="w-full bg-red-700 hover:bg-red-900 py-2 rounded-lg font-semibold transition shadow-lg"
           >
             Sign Up
           </button>

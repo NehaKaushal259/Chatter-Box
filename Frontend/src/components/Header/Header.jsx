@@ -23,7 +23,7 @@ const Header = () => {
         
         {/* Logo */}
         <div className="flex items-center gap-2 text-2xl font-bold">
-          <div className="bg-blue-500 p-2 rounded-full">
+          <div className="bg-red-600 p-2 rounded-full">
             <FaComments />
           </div>
           <span className="tracking-wide">CHATTER BOX</span>
@@ -32,16 +32,16 @@ const Header = () => {
         {/* Links */}
         <div className="flex items-center gap-6 text-sm md:text-base">
           
-          <a href="#" className="flex items-center gap-2 hover:text-blue-400 transition">
+          <a href="#" className="flex items-center gap-2 hover:text-red-600 transition">
             <FaPhoneAlt /> Contact
           </a>
 
-          <a href="/login" className="flex items-center gap-2 hover:text-blue-400 transition">
+          <a href="/login" className="flex items-center gap-2 hover:text-red-600 transition">
             <FaUser /> Login
           </a>
 
           {/* Sign Up Button */}
-          <button className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-full font-semibold transition shadow-lg">
+          <button className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-full font-semibold transition shadow-lg">
             <Link to="/signup"> Sign Up </Link>
           </button>
         </div>
