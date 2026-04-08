@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <div className="relative w-full z-50">
+    <div className="relative w-full z-10">
       
       {/* Background Image */}
       {/* <div className="absolute inset-0">
