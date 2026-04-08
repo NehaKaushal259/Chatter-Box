@@ -68,10 +68,6 @@ const LogIn = () => {
       {/* 🌈 Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#3b0a1e] via-[#7b1e3a] to-[#ff4d6d]"></div>
 
-      {/* 🔴 Big Blurry Circles (MATCHED COLORS) */}
-      <div className="absolute w-[420px] h-[420px] bg-[#ff4d6d] rounded-full top-[-120px] left-[-120px] opacity-20 blur-3xl"></div>
-      <div className="absolute w-[350px] h-[350px] bg-[#7b1e3a] rounded-full bottom-[-100px] right-[-100px] opacity-25 blur-3xl"></div>
-      <div className="absolute w-[250px] h-[250px] bg-[#ff85a1] rounded-full top-[40%] left-[60%] opacity-20 blur-2xl"></div>
 
         {/* 💎 Main Card */}
       <div className="relative z-10 w-[90%] max-w-5xl h-[500px] bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl flex overflow-hidden">
@@ -138,12 +134,14 @@ const LogIn = () => {
               {/* Forgot */}
               <div className="text-right text-sm">
                 <a href="#" className="hover:text-pink-200">
-                  Forgot Password?
+                <Link to="/forgot_password" className="text-blue-400 hover:underline">
+                  Forgot Password? 
+                </Link>
                 </a>
               </div>
 
               {/* Button */}
-              <button className="w-full bg-red-500 hover:bg-red-600 py-2 rounded-lg font-semibold transition shadow-lg">
+              <button className="w-full bg-red-600 hover:bg-red-700 py-2 rounded-lg font-semibold transition shadow-lg">
                 Login
               </button>
             </form>

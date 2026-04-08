@@ -40,3 +40,53 @@ class LoginView(APIView):
             return Response({
                 "error" : "Invalid email or password"
             }, status=400)
+        
+
+# views.py
+import random
+from django.core.mail import send_mail
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .models import OTP
+
+@api_view(['POST'])
+def send_otp(request):
+    email = request.data.get('email')
+
+    otp = str(random.randint(100000, 999999))
+
+    OTP.objects.create(email=email, otp=otp)
+
+    send_mail(
+        'Your OTP Code',
+        f'Your OTP is {otp}',
+        'your_email@gmail.com',
+        [email],
+    )
+
+    return Response({"message": "OTP sent"})
+
+
+
+# views.py
+from django.core.mail import send_mail
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .models import OTP
+
+@api_view(['POST'])
+def send_otp(request):
+    email = request.data.get('email')
+
+    otp = str(random.randint(100000, 999999))
+
+    OTP.objects.create(email=email, otp=otp)
+
+    send_mail(
+        'Your OTP Code',
+        f'Your OTP is {otp}',
+        'your_email@gmail.com',
+        [email],
+    )
+
+    return Response({"message": "OTP sent"})
