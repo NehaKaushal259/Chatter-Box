@@ -4,9 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 
 
 const images = [
-  "https://i.pinimg.com/736x/7d/9c/5c/7d9c5c9c2d4e0c6e2c2a6d1d2b0c9c7d.jpg",
-  "https://i.pinimg.com/736x/aa/2e/4b/aa2e4b8b1c9d5c2c2e4a2b9c3d7e8f9a.jpg",
-  "https://i.pinimg.com/736x/5f/9c/3b/5f9c3b2e4d7a9c1e2b6d8f0c3a7b9d1e.jpg",
+  "https://img.freepik.com/free-vector/people-social-media-smartphone_24908-56304.jpg?semt=ais_rp_50_assets&w=740&q=80",
+  "https://img.freepik.com/free-vector/organic-flat-customer-support-illustration_23-2148899340.jpg?semt=ais_hybrid&w=740&q=80",
+  "https://img.freepik.com/free-vector/dating-app-interface_23-2148509974.jpg?semt=ais_incoming&w=740&q=80",
 ];
 
 const LogIn = () => {
@@ -53,7 +53,7 @@ const LogIn = () => {
         alert("Login Successful ✅");
 
         localStorage.setItem("user", JSON.stringify(data))
-        navigate("/Animated")
+        navigate("/welcome_page")
       }else{alert(data.error || "Login Failed")}
     }catch(err){
       console.error("Login Error : ", err);
@@ -85,9 +85,9 @@ const LogIn = () => {
           />
 
           {/* Overlay text */}
-          <div className="absolute inset-0 bg-black/30 flex items-center justify-center text-white text-2xl font-semibold">
+          {/* <div className="absolute inset-0 bg-black/30 flex items-center justify-center text-white text-2xl font-semibold">
             Chat & Chill 💖
-          </div>
+          </div> */}
         </div>
 
         {/* ✨ RIGHT SIDE (FORM) */}

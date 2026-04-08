@@ -9,7 +9,6 @@ import Main from './components/Main/Main'
 import LogIn from './components/LogIn/LogIn.jsx'
 import SignUp from './components/SignUp/SignUp'
 import Root from './Root'
-import Thanku from './components/SignUp/Thanku.jsx'
 import Animated from './components/Animated/Animated.jsx'
 
 
