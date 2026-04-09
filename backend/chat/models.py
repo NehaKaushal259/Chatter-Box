@@ -17,9 +17,3 @@ class SignUp(AbstractUser):
         return self.email
 
 
-# models.py
-
-class OTP(models.Model):
-    email = models.EmailField()
-    otp = models.CharField(max_length=6)
-    created_at = models.DateTimeField(auto_now_add=True)

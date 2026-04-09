@@ -1,12 +1,19 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework import status
 from .serializers import SignUpSerializer
 from django.contrib.auth import authenticate
 
 
-# Create your views here.
+# from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+
+
+User = get_user_model()
+
 
 class signUpView(APIView):
     def post(self, request):
@@ -26,67 +33,78 @@ class LoginView(APIView):
         email = request.data.get('email')
         password = request.data.get('password')
 
-        user = authenticate(request,
-                            email=email,
-                            password=password)
-        
-        if user is not None:
+        try:
+            user = User.objects.get(email=email)
+
+            if user.check_password(password):   # ✅ correct way
+                return Response({
+                    "message": "Login successful",
+                    "email": user.email,
+                    "name": user.name
+                }, status=200)
+            else:
+                return Response({
+                    "error": "Invalid email or password"
+                }, status=400)
+
+        except User.DoesNotExist:
             return Response({
-                "message" : "Login successful",
-                "email" : user.email,
-                "name" : user.name 
-            }, status=200)
-        else:
-            return Response({
-                "error" : "Invalid email or password"
-            }, status=400)
+                "error": "User not found"
+            }, status=404)
         
 
-# views.py
-import random
-from django.core.mail import send_mail
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from .models import OTP
+
+
+
 
 @api_view(['POST'])
-def send_otp(request):
-    email = request.data.get('email')
+def check_user(request):
+    try:
+        email = request.data.get('email')
 
-    otp = str(random.randint(100000, 999999))
+        if not email:
+            return Response({"error": "Email required"}, status=400)
 
-    OTP.objects.create(email=email, otp=otp)
+        exists = User.objects.filter(email=email).exists()
 
-    send_mail(
-        'Your OTP Code',
-        f'Your OTP is {otp}',
-        'your_email@gmail.com',
-        [email],
-    )
+        return Response({"exists": exists})
 
-    return Response({"message": "OTP sent"})
-
+    except Exception as e:
+        print("ERROR:", e)   # 👈 THIS LINE IS VERY IMPORTANT
+        return Response({"error": "Server error"}, status=500)
+    
 
 
-# views.py
-from django.core.mail import send_mail
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from .models import OTP
+
+
+
+
 
 @api_view(['POST'])
-def send_otp(request):
-    email = request.data.get('email')
+def reset_password(request):
 
-    otp = str(random.randint(100000, 999999))
+    # User = get_user_model()
+    # user = User.objects.get(email=email)
 
-    OTP.objects.create(email=email, otp=otp)
+    try:
+        email = request.data.get('email')
+        password = request.data.get('password')   # ✅ get password
 
-    send_mail(
-        'Your OTP Code',
-        f'Your OTP is {otp}',
-        'your_email@gmail.com',
-        [email],
-    )
+        if not email or not password:
+            return Response({"error": "Email required"}, status=400)
 
-    return Response({"message": "OTP sent"})
+        user = User.objects.get(email=email)
+
+        user.set_password(password)   # 🔐 important
+        user.save()
+
+        return Response({"message": "Password updated successfully"})
+
+    except User.DoesNotExist:
+        return Response({"error": "User not found"}, status=404)
+
+    except Exception as e:
+        print("ERROR:", e)   # 👈 VERY IMPORTANT
+        return Response({"error": "Server error"}, status=500)
+    
+

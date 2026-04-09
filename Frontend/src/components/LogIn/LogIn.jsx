@@ -133,11 +133,11 @@ const LogIn = () => {
 
               {/* Forgot */}
               <div className="text-right text-sm">
-                <a href="#" className="hover:text-pink-200">
+                {/* <a href="#" className="hover:text-pink-200"> */}
                 <Link to="/forgot_password" className="text-blue-400 hover:underline">
                   Forgot Password? 
                 </Link>
-                </a>
+                {/* </a> */}
               </div>
 
               {/* Button */}
