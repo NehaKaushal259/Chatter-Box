@@ -1,19 +1,34 @@
-import React from "react";
-import { FaComments, FaUser, FaPhoneAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { FaComments, FaUser, FaPhoneAlt, FaHeart } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user"))
+  );
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // const loggedUser = JSON.parse(localStorage.getItem("user"));
+    // setUser(loggedUser);
+    const handleLogin = () => {
+      setUser(JSON.parse(localStorage.getItem("user")))
+    }
+
+    window.addEventListener("login", handleLogin)
+
+    return() => window.removeEventListener("login", handleLogin)
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+
+    window.dispatchEvent(new Event("login"));
+    navigate("/login");
+  };
   return (
     <div className="relative w-full z-10">
-      
-      {/* Background Image */}
-      {/* <div className="absolute inset-0">
-        <img
-          src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
-          alt="bg"
-          className="w-full h-full object-cover"
-        />
-      </div> */}
 
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-transparent"></div>
@@ -30,7 +45,7 @@ const Header = () => {
         </div>
 
         {/* Links */}
-        <div className="flex items-center gap-6 text-sm md:text-base">
+        {/* <div className="flex items-center gap-6 text-sm md:text-base">
           
           <a href="#" className="flex items-center gap-2 hover:text-red-600 transition">
             <FaPhoneAlt /> Contact
@@ -38,12 +53,63 @@ const Header = () => {
 
           <a href="/login" className="flex items-center gap-2 hover:text-red-600 transition">
             <FaUser /> Login
-          </a>
+          </a> */}
 
           {/* Sign Up Button */}
-          <button className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-full font-semibold transition shadow-lg">
+          {/* <button className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-full font-semibold transition shadow-lg">
             <Link to="/signup"> Sign Up </Link>
           </button>
+        </div> */}
+
+
+        {/* 🔥 RIGHT SIDE */}
+        <div className="flex items-center gap-6 text-sm md:text-base">
+
+          {/* 🔹 IF USER NOT LOGGED IN */}
+          {!user ? (
+            <>
+              <a href="#" className="flex items-center gap-2 hover:text-red-600 transition">
+                <FaPhoneAlt /> Contact
+              </a>
+
+              <Link to="/login" className="flex items-center gap-2 hover:text-red-600 transition">
+                <FaUser /> Login
+              </Link>
+
+              <Link
+                to="/signup"
+                className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-full font-semibold transition shadow-lg"
+              >
+                Sign Up
+              </Link>
+            </>
+          ) : (
+            <>
+              {/* ❤️ Friend Requests */}
+              <button
+                onClick={() => navigate("/requests")}
+                className="text-xl hover:text-red-500"
+              >
+                <FaHeart />
+              </button>
+
+              {/* 👤 Profile */}
+              <button
+                onClick={() => navigate("/profile")}
+                className="text-xl hover:text-blue-400"
+              >
+                <FaUser />
+              </button>
+
+              {/* 🚪 Logout */}
+              {/* <button
+                onClick={handleLogout}
+                className="bg-red-600 px-3 py-1 rounded hover:bg-red-700"
+              >
+                Logout
+              </button> */}
+            </>
+          )}
         </div>
       </div>
 

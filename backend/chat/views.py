@@ -10,6 +10,8 @@ from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from .models import *
+
 
 
 User = get_user_model()
@@ -107,4 +109,8 @@ def reset_password(request):
         print("ERROR:", e)   # 👈 VERY IMPORTANT
         return Response({"error": "Server error"}, status=500)
     
+
+
+
+
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const messages = [
   "Hello! How are you? 😊",
@@ -62,9 +63,11 @@ const Animated = () => {
           Make friends, share moments & enjoy chatting 💖
         </p>
 
-        <button className="px-6 py-3 bg-white text-pink-500 font-semibold rounded-full shadow-lg hover:scale-105 transition duration-300">
-          Start Chatting 💬
-        </button>
+        <Link to="/chatPage">
+          <button className="px-6 py-3 bg-white text-pink-500 font-semibold rounded-full shadow-lg hover:scale-105 transition duration-300">
+            Start Chatting 💬
+          </button>
+        </Link>
       </div>
 
       {/* 💬 Floating Messages (SIDE ONLY, NOT CENTER) */}

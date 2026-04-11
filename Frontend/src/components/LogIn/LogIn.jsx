@@ -47,12 +47,22 @@ const LogIn = () => {
         },
         body : JSON.stringify(form),
       })
-      const data = await res.json()
+      // const data = await res.json()
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        data = { error: "Server error" };
+      }
 
       if (res.ok){
         alert("Login Successful ✅");
 
-        localStorage.setItem("user", JSON.stringify(data))
+        localStorage.setItem("user", JSON.stringify(data));
+        console.log(localStorage.getItem("user"));
+        
+        window.dispatchEvent(new Event("login"));
+
         navigate("/welcome_page")
       }else{alert(data.error || "Login Failed")}
     }catch(err){
