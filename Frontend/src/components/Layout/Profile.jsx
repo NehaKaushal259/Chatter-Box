@@ -4,7 +4,6 @@ import { FaUserEdit, FaSignOutAlt, FaImage } from "react-icons/fa";
 
 const Profile = () => {
   const navigate = useNavigate();
- const [preview, setPreview] = useState(null);
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -14,20 +13,6 @@ const Profile = () => {
     navigate("/login");
   };
 
-    // Image upload
-  const handleImage = (e) => {
-    const file = e.target.files[0];
-    setForm({ ...form, image: file });
-
-    if (file) {
-      setPreview(URL.createObjectURL(file));
-    }
-    try{
-      
-    }catch(err){
-      console.error("SignUp error : ", err);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center text-white -mt-20">
@@ -37,29 +22,37 @@ const Profile = () => {
 
         {/* 👤 Profile Image */}
         <div className="flex flex-col items-center">
-          {/* <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-red-800 shadow-lg">
-            <img
-              src={user?.image }
-              alt="profile"
-              className="w-full h-full object-cover"
-            />
-          </div> */}
 
-            <div className="flex flex-col items-center">
+            {/* <div className="flex flex-col items-center">
                 <label className="cursor-pointer">
-                <div className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center overflow-hidden">
-                    {preview ? (
-                    <img src={preview} alt="preview" className="w-full h-full object-cover" />
-                    ) : (
-                    <FaImage size={24} />
-                    )}
-                </div>
-                <input type="file" className="hidden" onChange={handleImage} />
+                    <img src={user?.image} alt="preview" className="w-full h-full object-cover" />
                 </label>
                 <p className="text-xs mt-2 opacity-70">Upload Profile</p>
-            </div>
+            </div> */}
 
-          <h2 className="text-2xl font-bold mt-4">
+            <div className="flex flex-col items-center">
+
+                <div className="w-24 h-24 rounded-full overflow-hidden flex items-center justify-center text-white text-4xl font-bold"
+                    style={{
+                        backgroundColor: user?.image ? "transparent" : "#ef4444" // red fallback
+                    }}
+                >
+                    {user?.image ? (
+                    <img
+                        src={user.image ? `http://127.0.0.1:8000${user.image}` : null}
+                        alt="profile"
+                        className="w-full h-full object-cover"
+                    />
+                    ) : (
+                    user?.name?.charAt(0).toUpperCase()
+                    )}
+                </div>
+
+                <p className="text-xs mt-2 opacity-70">Profile</p>
+
+                </div>
+
+          <h2 className="text-2xl font-bold mt-4 capitalize">
             {user?.name || "User Name"}
           </h2>
 
@@ -74,6 +67,8 @@ const Profile = () => {
           <div className="bg-white/10 p-3 rounded-lg">
             <p className="text-sm text-gray-300">User ID</p>
             <p className="font-semibold">{user?.id}</p>
+
+            {/* <p className="font-semibold">{user?.custom_id}</p> */}
           </div>
 
           <div className="bg-white/10 p-3 rounded-lg">
@@ -93,7 +88,7 @@ const Profile = () => {
 
           {/* Edit */}
           <button
-            onClick={() => navigate("/edit-profile")}
+            onClick={() => navigate("/editProfile")}
             className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 py-2 rounded-lg transition"
           >
             <FaUserEdit /> Edit

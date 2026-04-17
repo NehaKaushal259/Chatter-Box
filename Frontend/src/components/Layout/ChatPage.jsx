@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+// import Request from "./Request";   
 
 const ChatPage = () => {
   const [friends, setFriends] = useState([]);
@@ -11,17 +12,17 @@ const ChatPage = () => {
 
   // 🔹 Fetch Friends
   const fetchFriends = async () => {
-    const res = await fetch("http://127.0.0.1:8000/api/friends/");
+    const res = await fetch(`http://127.0.0.1:8000/api/friend-requests/?email=${user.email}`);
     const data = await res.json();
     setFriends(data);
   };
 
-  // 🔹 Fetch Friend Requests
-  const fetchRequests = async () => {
-    const res = await fetch("http://127.0.0.1:8000/api/friend-requests/");
+
+  const fetchUsers = async () => {
+    const res = await fetch(`http://127.0.0.1:8000/api/users/?email=${user.email}`)
     const data = await res.json();
-    setRequests(data);
-  };
+    setRequests(data)
+  }
 
   // 🔹 Fetch Messages
   const fetchMessages = async (id) => {
@@ -32,16 +33,34 @@ const ChatPage = () => {
 
   useEffect(() => {
     fetchFriends();
-    fetchRequests();
+    fetchUsers();
   }, []);
 
+  const sendRequest = async (id) => {
+    await fetch("http://127.0.0.1:8000/api/send-request/",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json" 
+      },
+      body: JSON.stringify({
+        from_email: user.email,
+        to_id: id,
+      }),
+    });
+    alert("Request Sent ✅ ")
+
+    setRequests((prev) => prev.filter((u) => u.id !== id))
+
+    window.dispatchEvent(new Event("requestUpdated"))
+  }
+
   return (
-    <div className="h-screen flex bg-gray-900 text-white -mt-20">
+    <div className="h-screen flex bg-gray-900 text-white -mt-20 relative">
 
       {/* 🔹 LEFT SIDEBAR */}
       <div className="w-1/3 bg-gray-800 p-4 overflow-y-auto pt-20">
 
-        <h2 className="text-xl font-bold mb-4">Friends</h2>
+        <h2 className="text-xl font-bold mb-4 bg-blue-600 h-80">Friends</h2>
 
         {/* Friends List */}
         {friends.map((f) => (
@@ -57,23 +76,42 @@ const ChatPage = () => {
           </div>
         ))}
 
-        {/* Friend Requests */}
-        <h2 className="text-xl font-bold mt-6 mb-2">Requests</h2>
+        {/* Friend Suggestion */}
+        <div className=" mt-4 mb-2  h-72 p-3 relative overflow-hidden hover:overflow-y-scroll">
+          <h2 className="text-xl font-bold mb-6">Suggestions</h2>
 
-        {requests.map((r) => (
-          <div key={r.id} className="bg-gray-700 p-3 rounded-lg mb-2">
-            <p>{r.from_user.name}</p>
+          {requests.map((r) => (
+            <div key={r.id} className="bg-gray-700 p-3 rounded-lg mb-2 flex mx-5 w-96">
+              {/* <img src={ r.image ? `http://127.0.0.1:8000${r.image}` : "https://via.placeholder.com/50"}
+                alt="profile"
+                className="w-12 h-12 rounded-full" /> */}
 
-            <div className="flex gap-2 mt-2">
-              <button className="bg-green-600 px-3 py-1 rounded">
-                Accept
-              </button>
-              <button className="bg-red-600 px-3 py-1 rounded">
-                Reject
+                <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-red-500 text-white font-bold">
+                  {r.image ? (
+                    <img
+                      src={`http://127.0.0.1:8000${r.image}`}
+                      alt="profile"
+                      className="w-12 h-12 object-cover"
+                    />
+                  ) : (
+                    r.name?.charAt(0).toUpperCase()
+                  )}
+                </div>
+              <div className="mt-3 ml-3"> 
+                <p className="">{r.name}</p>
+                {/* <p className="text-xs">{r.email}</p> */}
+              </div>
+
+              <button
+                onClick={() => sendRequest(r.id)}
+                className="bg-blue-600 px-3 py-1 rounded mt-2 ml-20 w-44 cursor-pointer"
+              >
+                Follow
               </button>
             </div>
-          </div>
-        ))}
+          ))}
+          
+        </div>
       </div>
 
       {/* 🔹 RIGHT CHAT AREA */}

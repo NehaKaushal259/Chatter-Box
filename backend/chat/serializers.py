@@ -8,7 +8,7 @@ class SignUpSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SignUp
-        fields = ['email', 'name', 'password', 'confirmPassword', 'image']
+        fields = ['email', 'name', 'password', 'confirmPassword', 'image', 'bio']
 
     def validate(self, data):
         if data['password'] != data['confirmPassword']:
@@ -22,11 +22,13 @@ class SignUpSerializer(serializers.ModelSerializer):
         password = validated_data.get('password')
         name = validated_data.get('name')
         image = validated_data.get('image', None)
+        bio = validated_data.get('bio')
 
         user = SignUp(
             email=email,
             name=name,
-            image=image
+            image=image,
+            bio=bio,
         )
 
         user.set_password(password) 
