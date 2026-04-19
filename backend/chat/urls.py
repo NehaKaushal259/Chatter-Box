@@ -22,10 +22,10 @@ urlpatterns = [
 # CONTACT US
 
 
-urlpatterns = [
-    path('api/contact/', contact_view),
-    path('api/complaints/', get_complaints),
-]
+# urlpatterns = [
+#     path('api/contact/', contact_view),
+#     path('api/complaints/', get_complaints),
+# ]
 
 
 

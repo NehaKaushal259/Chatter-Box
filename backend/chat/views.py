@@ -246,41 +246,41 @@ def get_request(request):
 
 
 
-def contact_view(request):
-    if request.method == "POST":
-        name = request.POST.get("name")
-        email = request.POST.get("email")
-        issue_type = request.POST.get("issueType")
-        message = request.POST.get("message")
-        screenshot = request.FILES.get("screenshot")
+# def contact_view(request):
+#     if request.method == "POST":
+#         name = request.POST.get("name")
+#         email = request.POST.get("email")
+#         issue_type = request.POST.get("issueType")
+#         message = request.POST.get("message")
+#         screenshot = request.FILES.get("screenshot")
 
-        contact = Contact.objects.create(
-            name=name,
-            email=email,
-            issue_type=issue_type,
-            message=message,
-            screenshot=screenshot
-        )
+#         contact = Contact.objects.create(
+#             name=name,
+#             email=email,
+#             issue_type=issue_type,
+#             message=message,
+#             screenshot=screenshot
+#         )
 
-        # ✅ Send Email to Admin
-        send_mail(
-            subject=f"New {issue_type} from {name}",
-            message=f"""
-Name: {name}
-Email: {email}
-Issue: {issue_type}
+#         # ✅ Send Email to Admin
+#         send_mail(
+#             subject=f"New {issue_type} from {name}",
+#             message=f"""
+# Name: {name}
+# Email: {email}
+# Issue: {issue_type}
 
-Message:
-{message}
-            """,
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[settings.EMAIL_HOST_USER],
-        )
+# Message:
+# {message}
+#             """,
+#             from_email=settings.EMAIL_HOST_USER,
+#             recipient_list=[settings.EMAIL_HOST_USER],
+#         )
 
-        return JsonResponse({"message": "Saved & Email sent"})
+#         return JsonResponse({"message": "Saved & Email sent"})
     
 
 
-def get_complaints(request):
-    data = list(Contact.objects.values())
-    return JsonResponse(data, safe=False)
+# def get_complaints(request):
+#     data = list(Contact.objects.values())
+#     return JsonResponse(data, safe=False)
