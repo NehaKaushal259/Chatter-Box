@@ -62,3 +62,22 @@ class FriendRequest(models.Model):
 
     def __str__(self):
         return f"{self.from_user} -> {self.to_user}"
+    
+
+
+
+
+
+
+# for Contact US page
+
+
+class Contact(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    issue_type = models.CharField(max_length=50)
+    message = models.TextField()
+    screenshot = models.URLField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    

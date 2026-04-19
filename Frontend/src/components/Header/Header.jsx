@@ -126,7 +126,7 @@ const Header = () => {
           {/* 🔹 IF USER NOT LOGGED IN */}
           {!user ? (
             <>
-              <a href="#" className="flex items-center gap-2 hover:text-red-600 transition">
+              <a href="/contact" className="flex items-center gap-2 hover:text-red-600 transition">
                 <FaPhoneAlt /> Contact
               </a>
 

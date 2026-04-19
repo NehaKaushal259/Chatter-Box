@@ -3,6 +3,9 @@ from django.urls import path
 from .views import *
 from .views import check_user, reset_password
 
+# contact us
+
+from .views import contact_view
 
 urlpatterns = [
     path('signup/', signUpView.as_view(), name='signup'),
@@ -13,6 +16,17 @@ urlpatterns = [
     path('send-request/', send_request),
     path('friend-requests/', get_request),
 ]
+
+
+
+# CONTACT US
+
+
+urlpatterns = [
+    path('api/contact/', contact_view),
+    path('api/complaints/', get_complaints),
+]
+
 
 
 
