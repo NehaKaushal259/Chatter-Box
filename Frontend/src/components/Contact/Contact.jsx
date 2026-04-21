@@ -1,123 +1,70 @@
-// import React, { useState } from "react";
+import React from 'react'
+import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
-// const Contact = () => {
-//   const [formData, setFormData] = useState({
-//     name: "",
-//     email: "",
-//     issueType: "Bug",
-//     message: "",
-//     screenshot: null
-//   });
-
-//   const [status, setStatus] = useState("");
-
-//   const handleChange = (e) => {
-//     if (e.target.name === "screenshot") {
-//       setFormData({ ...formData, screenshot: e.target.files[0] });
-//     } else {
-//       setFormData({ ...formData, [e.target.name]: e.target.value });
-//     }
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     const data = new FormData();
-//     for (let key in formData) {
-//       data.append(key, formData[key]);
-//     }
-
-//     try {
-//       const res = await fetch("http://127.0.0.1:8000/api/contact/", {
-//         method: "POST",
-//         body: data
-//       });
-
-//       if (res.ok) {
-//         setStatus("✅ Sent successfully!");
-//       } else {
-//         setStatus("❌ Failed");
-//       }
-//     } catch (err) {
-//       setStatus("⚠️ Server error");
-//     }
-//   };
-
-//   return (
-//   <div className="min-h-screen w-full bg-[#1a1a1a] flex items-center justify-center px-4 -mt-20">
-  
-//   <div className="w-full max-w-lg p-6 bg-[#1e1e1e] rounded-xl text-white text-center shadow-lg">
-    
-//     <h2 className="mb-2 text-xl font-semibold">Contact Support 💬</h2>
-    
-//     <p className="text-sm mb-5 text-gray-400">
-//       Found a bug or need help? Tell us and we’ll fix it ASAP 🚀
-//     </p>
-
-//     <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+function Contact() {
+  return (
+    <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center px-4 -mt-20">
       
-//       <input
-//         type="text"
-//         name="name"
-//         placeholder="Your Name"
-//         value={formData.name}
-//         onChange={handleChange}
-//         required
-//         className="p-2.5 rounded-lg bg-[#2a2a2a] text-white outline-none focus:ring-2 focus:ring-red-500"
-//       />
+      {/* MAIN CARD */}
+      <div className="w-full max-w-5xl bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl p-8 grid md:grid-cols-2 gap-8">
 
-//       <input
-//         type="email"
-//         name="email"
-//         placeholder="Your Email"
-//         value={formData.email}
-//         onChange={handleChange}
-//         required
-//         className="p-2.5 rounded-lg bg-[#2a2a2a] text-white outline-none focus:ring-2 focus:ring-red-500"
-//       />
+        {/* 🔹 LEFT SIDE (INFO) */}
+        <div className="flex flex-col justify-center space-y-6">
+          <h2 className="text-3xl font-bold">Contact Us 💬</h2>
+          <p className="text-gray-300">
+            Have questions or want to connect? Feel free to reach out to us anytime.
+          </p>
 
-//       <select
-//         name="issueType"
-//         value={formData.issueType}
-//         onChange={handleChange}
-//         className="p-2.5 rounded-lg bg-[#2a2a2a] text-white outline-none focus:ring-2 focus:ring-red-500"
-//       >
-//         <option value="Bug">🐞 Bug Report</option>
-//         <option value="Help">🙋 Need Help</option>
-//         <option value="Feedback">💡 Feedback</option>
-//       </select>
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <FaPhoneAlt className="text-red-500" />
+              <span>+91 98765 43210</span>
+            </div>
 
-//       <textarea
-//         name="message"
-//         placeholder="Describe your issue..."
-//         value={formData.message}
-//         onChange={handleChange}
-//         required
-//         className="p-2.5 rounded-lg bg-[#2a2a2a] text-white outline-none min-h-[100px] focus:ring-2 focus:ring-red-500"
-//       />
+            <div className="flex items-center gap-3">
+              <FaEnvelope className="text-red-500" />
+              <span>support@chatterbox.com</span>
+            </div>
 
-//       <input
-//         type="file"
-//         name="screenshot"
-//         onChange={handleChange}
-//         className="p-2 rounded-lg bg-[#2a2a2a] text-white file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:bg-red-500 file:text-white"
-//       />
+            <div className="flex items-center gap-3">
+              <FaMapMarkerAlt className="text-red-500" />
+              <span>India</span>
+            </div>
+          </div>
+        </div>
 
-//       <button
-//         type="submit"
-//         className="p-3 rounded-lg bg-red-500 hover:bg-red-800 transition text-white font-bold"
-//       >
-//         Send Message 🚀
-//       </button>
+        {/* 🔹 RIGHT SIDE (FORM) */}
+        <form className="space-y-5">
+          <h3 className="text-xl font-semibold">Send Message</h3>
 
-//       <p>{status}</p>
-//     </form>
+          <input
+            type="text"
+            placeholder="Your Name"
+            className="w-full px-4 py-3 rounded-lg bg-gray-800 outline-none focus:ring-2 focus:ring-red-500"
+          />
 
-//     {status && <p className="mt-4">{status}</p>}
-//   </div>
+          <input
+            type="email"
+            placeholder="Your Email"
+            className="w-full px-4 py-3 rounded-lg bg-gray-800 outline-none focus:ring-2 focus:ring-red-500"
+          />
 
-// </div>
-//   );
-// };
+          <textarea
+            rows="4"
+            placeholder="Your Message"
+            className="w-full px-4 py-3 rounded-lg bg-gray-800 outline-none focus:ring-2 focus:ring-red-500"
+          ></textarea>
 
-// export default Contact;
+          <button
+            type="submit"
+            className="w-full bg-red-600 hover:bg-red-700 py-3 rounded-lg font-semibold transition"
+          >
+            Send Message 🚀
+          </button>
+        </form>
+      </div>
+    </div>
+  )
+}
+
+export default Contact

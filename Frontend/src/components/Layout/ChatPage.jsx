@@ -14,7 +14,10 @@ const ChatPage = () => {
   const fetchFriends = async () => {
     const res = await fetch(`http://127.0.0.1:8000/api/friend-requests/?email=${user.email}`);
     const data = await res.json();
-    setFriends(data);
+    // setFriends(data);
+    setFriends(Array.isArray(data) ? data : []);
+
+    console.log("FRIENDS API RESPONSE:", data);
   };
 
 
@@ -182,3 +185,5 @@ const ChatPage = () => {
 };
 
 export default ChatPage;
+
+
