@@ -19,5 +19,5 @@ urlpatterns = [
 
 
 
-# email : lucky121@gamil.com , password : lucky1212     {admin}
+# email : lucky121@gamil.com , name : lucky1212, password : lucky@1212     {admin}
 
