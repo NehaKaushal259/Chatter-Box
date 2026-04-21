@@ -84,7 +84,7 @@ const ChatPage = () => {
           <h2 className="text-xl font-bold mb-6">Suggestions</h2>
 
           {requests.map((r) => (
-            <div key={r.id} className="bg-gray-700 p-3 rounded-lg mb-2 flex mx-5 w-96">
+            <div key={r.id} className="bg-gray-700 p-3 rounded-lg mb-2 flex mx-5 w-[26em]">
               {/* <img src={ r.image ? `http://127.0.0.1:8000${r.image}` : "https://via.placeholder.com/50"}
                 alt="profile"
                 className="w-12 h-12 rounded-full" /> */}
@@ -100,9 +100,9 @@ const ChatPage = () => {
                     r.name?.charAt(0).toUpperCase()
                   )}
                 </div>
-              <div className="mt-3 ml-3"> 
+              <div className="mt-1 ml-3"> 
                 <p className="">{r.name}</p>
-                {/* <p className="text-xs">{r.email}</p> */}
+                <p className="text-xs">{r.custom_id}</p>
               </div>
 
               <button

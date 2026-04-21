@@ -12,6 +12,7 @@ function EditPage() {
     email: storedUser?.email || "",
     bio: storedUser?.bio || "",
     image: null,
+    custom_id: storedUser?.custom_id || "",
   });
 
   const [preview, setPreview] = useState(
@@ -61,6 +62,7 @@ const handleSubmit = async (e) => {
   formData.append("name", form.name);
   formData.append("email", form.email);
   formData.append("bio", form.bio);
+  formData.append("custom_id", form.custom_id);
 
   if (form.image) {
     formData.append("image", form.image); // 🔥 actual file
@@ -128,6 +130,19 @@ const handleSubmit = async (e) => {
               <input type="file" className="hidden" onChange={handleImage} />
             </label>
             <p className="text-xs mt-2 opacity-70">Change Profile</p>
+          </div>
+
+          {/* 📝 USER ID */}
+          <div className="flex items-center bg-white/10 px-4 py-3 rounded-lg">
+            <FaUser className="mr-3 text-gray-300" />
+            <input
+              type="text"
+              name="custom_id"
+              value={form.custom_id}
+              onChange={handleChange}
+              placeholder="Enter your user ID"
+              className="bg-transparent outline-none w-full text-white placeholder-gray-400"
+            />
           </div>
 
           {/* 📝 NAME */}

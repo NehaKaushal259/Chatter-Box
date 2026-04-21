@@ -13,6 +13,10 @@ const Profile = () => {
     navigate("/login");
   };
 
+  // console.log(user.email);
+  
+  // console.log(user.custom_id);
+  
 
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center text-white -mt-20">
@@ -66,9 +70,8 @@ const Profile = () => {
 
           <div className="bg-white/10 p-3 rounded-lg">
             <p className="text-sm text-gray-300">User ID</p>
-            <p className="font-semibold">{user?.id}</p>
+            <p className="font-semibold">{user?.custom_id}</p>  
 
-            {/* <p className="font-semibold">{user?.custom_id}</p> */}
           </div>
 
           <div className="bg-white/10 p-3 rounded-lg">

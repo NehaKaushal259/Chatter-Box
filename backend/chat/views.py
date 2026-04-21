@@ -46,6 +46,7 @@ class LoginView(APIView):
                     "name": user.name,
                     "image": user.image.url if user.image else None,
                     "bio": user.bio,
+                    "custom_id": user.custom_id
                 }, status=200)
             else:
                 return Response({
@@ -68,6 +69,7 @@ def update_profile(request):
         
         user.name = request.data.get("name", user.name)
         user.bio = request.data.get("bio", user.bio)
+        user.custom_id = request.data.get("custom_id", user.custom_id)
 
         if request.FILES.get("image"):
             user.image = request.FILES.get("image")
@@ -76,6 +78,7 @@ def update_profile(request):
 
         return Response({
             "name" : user.name,
+            "custom_id": user.custom_id,
             "email" : user.email,
             "bio": user.bio,
             "image" : user.image.url if user.image else None,
@@ -150,7 +153,8 @@ def get_user(request):
             "id" : u.id,
             "name" : u.name,
             "email" : u.email,
-            "image": u.image.url if u.image else None
+            "image": u.image.url if u.image else None,
+            "custom_id": u.custom_id    
         }
         for u in users
     ]

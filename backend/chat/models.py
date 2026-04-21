@@ -34,12 +34,7 @@ class SignUp(AbstractUser):
     name = models.CharField(max_length=255)
     image = models.ImageField(upload_to='profile/', blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
-
-    custom_id = models.CharField(
-        max_length=10,
-        unique=True,
-        default=generate_user_id
-    )
+    custom_id = models.CharField(max_length=10, unique=True, default=generate_user_id)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name']
