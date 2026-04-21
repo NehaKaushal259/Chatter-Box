@@ -15,8 +15,6 @@ import ChatPage from './components/Layout/ChatPage.jsx'
 import Profile from './components/Layout/Profile.jsx'
 // import Request from './components/Layout/Request.jsx'
 import EditPage from './components/Layout/EditPage.jsx'
-import Contact from './components/Contact/Contact.jsx'
-import Dashboard from './components/Contact/Dashboard.jsx'
 
 
 
@@ -26,8 +24,6 @@ const router = createBrowserRouter(
       <Route index element={<Main />} />
       <Route path='login' element={<LogIn />} />
       <Route path='signup' element={<SignUp />} />
-      <Route path='contact/' element={<Contact />} />
-      <Route path='complaintsdashboard' element={<Dashboard />} />
       <Route path="welcome_page" element={<Animated />} />
       <Route path='forgot_password' element={<Forgot_Password />} />
       <Route path='chatPage' element={<ChatPage />} >
