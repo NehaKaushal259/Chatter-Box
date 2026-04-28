@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 import random
 import string
+from django.utils import timezone
 
 # Create your models here.
 
@@ -59,4 +60,31 @@ class FriendRequest(models.Model):
         return f"{self.from_user} -> {self.to_user}"
     
 
+
+class Message(models.Model):
+    sender = models.ForeignKey(SignUp, on_delete=models.CASCADE, related_name="sender_messages", null=True, blank=True)
+    receiver = models.ForeignKey(SignUp, on_delete=models.CASCADE, related_name="receiver_messages", null=True, blank=True)
+
+    message = models.TextField(max_length=1000, null=True, blank=True)
+    is_read = models.BooleanField(default=False)
+    date = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ["date"]
+        verbose_name_plural = "Messages"
+
+    def __str__(self):
+        return f"{self.sender} - {self.receiver}"
+    
+    @property
+    def sender_profile(self):
+        # sender_profile = SignUp.objects.get(user = self.sender)
+        return self.sender
+    
+
+    @property
+    def receiver_profile(self):
+        # receiver_profile = SignUp.objects.get(user = self.receiver)
+        return self.receiver
+    
 

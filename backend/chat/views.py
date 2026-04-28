@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework import status
-from .serializers import SignUpSerializer
+from .serializers import SignUpSerializer, MessageSerializer
 from django.contrib.auth import authenticate
+from django.db.models import Q, Subquery, OuterRef
+from rest_framework import generics
 
 
 # from django.contrib.auth.models import User
@@ -146,7 +148,12 @@ def reset_password(request):
 
 @api_view(['GET'])
 def get_user(request):
-    users = User.objects.exclude(email=request.GET.get("email"))
+    email = request.GET.get("email")
+
+    if not email:
+        return Response({"error": "Email required"}, status=400)
+
+    users = User.objects.exclude(email=email)
 
     data = [
         {
@@ -159,21 +166,6 @@ def get_user(request):
         for u in users
     ]
     return Response(data)
-
-
-@api_view(['POST'])
-def send_request(request):
-    try:
-        from_user = User.objects.get(email=request.data.get("from_email"))
-        to_user = User.objects.get(id=request.data.get("to_id"))
-    except User.DoesNotExist:
-        return Response({"error": "User not found"}, status=404)
-
-    FriendRequest.objects.create(
-        from_user = from_user,
-        to_user = to_user
-    )
-    return Response({"message" : "Request Sent"})
 
 
 @api_view(['GET'])
@@ -203,6 +195,8 @@ def get_request(request):
                 "from_user": {
                     "id": r.from_user.id,
                     "name": r.from_user.name,
+                    "image": r.from_user.image.url if r.from_user.image else None,
+                    "custom_id": r.from_user.custom_id
                 }
             }
             for r in requests
@@ -219,3 +213,239 @@ def get_request(request):
     
 
 
+@api_view(['GET'])
+def get_friends(request):
+    email = request.GET.get("email")
+
+    try:
+        user = User.objects.get(email=email)
+
+        friends = FriendRequest.objects.filter(
+            (models.Q(from_user=user) | models.Q(to_user=user)),
+            status="accepted"
+        )
+
+        data = []
+        for f in friends:
+            friend = f.to_user if f.from_user == user else f.from_user
+
+            data.append({
+                "id": friend.id,
+                "name": friend.name,
+                "email": friend.email,
+                "image": friend.image.url if friend.image else None,
+                "custom_id": friend.custom_id
+            })
+
+        return Response(data)
+
+    except User.DoesNotExist:
+        return Response({"error": "User not found"}, status=404)
+
+
+
+
+@api_view(['POST'])
+def send_request(request):
+    try:
+        from_user = User.objects.get(email=request.data.get("from_email"))
+        to_user = User.objects.get(id=request.data.get("to_id"))
+
+        # 🔥 Prevent duplicate requests
+        exists = FriendRequest.objects.filter(
+            from_user=from_user,
+            to_user=to_user
+        ).exists()
+
+        if exists:
+            return Response({"message": "Already sent"}, status=200)
+
+        FriendRequest.objects.create(
+            from_user=from_user,
+            to_user=to_user
+        )
+
+        return Response({"message": "Request Sent"})
+
+    except User.DoesNotExist:
+        return Response({"error": "User not found"}, status=404)
+
+
+
+@api_view(['POST'])
+def respond_request(request):
+    try:
+        req = FriendRequest.objects.get(id=request.data.get("request_id"))
+        action = request.data.get("action")  # accepted / rejected
+
+        if action not in ["accepted", "rejected"]:
+            return Response({"error": "Invalid action"}, status=400)
+
+        req.status = action
+        req.save()
+
+        return Response({"message": f"Request {action}"})
+
+    except FriendRequest.DoesNotExist:
+        return Response({"error": "Request not found"}, status=404)
+    
+
+
+
+# @api_view(['POST'])
+# def send_message(request):
+#     try:
+#         sender_id = request.data.get("sender")
+#         receiver_id = request.data.get("receiver")
+#         text = request.data.get("text")
+
+#         if not sender_id or not receiver_id or not text:
+#             return Response({"error": "All fields required"}, status=400)
+
+#         sender = User.objects.get(id=sender_id)
+#         receiver = User.objects.get(id=receiver_id)
+
+#         message = Message.objects.create(
+#             sender=sender,
+#             receiver=receiver,
+#             text=text
+#         )
+
+#         return Response({
+#             "id": message.id,
+#             "sender": sender.id,
+#             "receiver": receiver.id,
+#             "text": message.text,
+#             "timestamp": message.timestamp
+#         }, status=201)
+
+#     except User.DoesNotExist:
+#         return Response({"error": "User not found"}, status=404)
+
+#     except Exception as e:
+#         print("ERROR:", e)
+#         return Response({"error": "Server error"}, status=500)
+    
+
+
+# @api_view(['GET'])
+# def get_messages(request):
+#     user_id = request.GET.get("user_id")
+#     friend_id = request.GET.get("friend_id")
+
+#     if not user_id or not friend_id:
+#         return Response({"error" : "Missing user_id or friend_id"}, status=400)
+    
+#     try:
+#         messages = Message.objects.filter(
+#             Q(sender_id=user_id, receiver_id=friend_id) | 
+#             Q(sender_id=friend_id, receiver_id=user_id)
+#         ).order_by("timestamp")
+
+#         data = [
+#             {
+#                 "id": m.id,
+#                 "sender": m.sender.id,
+#                 "receiver": m.receiver.id,
+#                 "text": m.text,
+#                 "timestamp": m.timestamp.strftime("%H:%M")
+#             }
+#             for m in messages
+#         ]
+#         return Response(data)
+    
+#     except Exception as e:
+#         print("Error : ", e)
+#         return Response({"error": "Server Error"}, status=500)
+
+
+
+
+# class MyInbox(generics.ListAPIView):
+#     serializer_class = MessageSerializer
+
+#     def get_queryset(self):
+#         user_id = self.kwargs['user_id']
+
+#         messages = Message.objects.filter(
+#             id_in = Subquery(
+#                 User.objects.filter(
+#                     Q(sender_receiver = user_id) | 
+#                     Q(receiver_sender = user_id)
+#                 ).distinct().annotate(
+#                     last_msg = Subquery(
+#                         Message.objects.filter(
+#                             Q(sender = OuterRef('id'), receiver = user_id) | 
+#                             Q(receiver = OuterRef('id'), sender = user_id)
+#                         ).order_by('-id')[:1].values_list('id',flat=True) 
+#                     )
+#                 ).values_list('last_msg', flat=True).order_by("-id")
+#             )
+#         ).order_by("-id")
+
+#         return messages
+    
+
+class MyInbox(generics.ListAPIView):
+    serializer_class = MessageSerializer
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+
+        messages = Message.objects.filter(
+            Q(sender_id=user_id) | Q(receiver_id=user_id)
+        ).order_by('-date')
+
+        return messages
+    
+
+class GetMessages(generics.ListAPIView):
+    serializer_class = MessageSerializer
+    
+    def get_queryset(self):
+        sender_id = self.kwargs['sender_id']
+        receiver_id = self.kwargs['receiver_id']
+
+        return Message.objects.filter(
+            sender__in=[sender_id, receiver_id],
+            receiver__in=[sender_id, receiver_id]
+        ).order_by("date")
+
+
+# class GetMessages(generics.ListAPIView):
+#     serializer_class = MessageSerializer
+    
+#     def get_queryset(self):
+#         sender_id = self.kwargs['sender_id']
+#         reciever_id = self.kwargs['reciever_id']
+#         messages =  Message.objects.filter(sender__in=[sender_id, reciever_id], reciever__in=[sender_id, reciever_id])
+#         return messages
+
+# class SendMessages(generics.CreateAPIView):
+#     serializer_class = MessageSerializer
+
+
+@api_view(['POST'])
+def send_message(request):
+    try:
+        sender = User.objects.get(id=request.data.get("sender"))
+        receiver = User.objects.get(id=request.data.get("receiver"))
+        message = request.data.get("message")
+
+        msg = Message.objects.create(
+            sender=sender,
+            receiver=receiver,
+            message=message
+        )
+
+        return Response({
+            "id": msg.id,
+            "sender": msg.sender.id,
+            "receiver": msg.receiver.id,
+            "message": msg.message,
+            "date": msg.date
+        })
+
+    except Exception as e:
+        print("ERROR:", e)
+        return Response({"error": "Failed to send message"}, status=500)

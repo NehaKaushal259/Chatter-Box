@@ -14,6 +14,7 @@ const Profile = () => {
   };
 
   // console.log(user.email);
+  // console.log(user.bio);
   
   // console.log(user.custom_id);
   
