@@ -283,14 +283,20 @@ const handleSend = async () => {
                 <p className="text-gray-400">No messages yet</p>
               ) : (
                 messages.map((msg, index) => {
-                  const isMe = Number(msg.sender) === Number(user.id);
+                  const senderId = typeof msg.sender === "object" ? msg.sender.id : msg.sender;
+
+                  const isMe = Number(senderId) === Number(user.id)
 
                   return (
                     <div
                       key={index}
                       className={`mb-2 ${isMe ? "text-right" : "text-left"}`}
                     >
-                      <span className="bg-gray-700 px-3 py-2 rounded-lg inline-block">
+                      <span className={`bg-gray-700 px-3 py-2 rounded-lg inline-block 
+                      ${
+                        isMe ? 'bg-red-600 text-white' : 'bg-gray-700 text-white'
+                      }
+                      `}>
                         {msg.message || "EMPTY"}
                       </span>
                     </div>
