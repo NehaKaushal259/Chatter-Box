@@ -244,9 +244,6 @@ def get_friends(request):
 
 
 
-<<<<<<< HEAD
-# For CONTACT US PAGE
-=======
 
 @api_view(['POST'])
 def send_request(request):
@@ -452,4 +449,3 @@ def send_message(request):
     except Exception as e:
         print("ERROR:", e)
         return Response({"error": "Failed to send message"}, status=500)
->>>>>>> 0da4ff0c9ba40b88506fa7b80b01574875e4d224
