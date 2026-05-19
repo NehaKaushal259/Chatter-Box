@@ -126,7 +126,7 @@ const Header = () => {
           <div className="bg-red-600 p-2 rounded-full">
             <FaComments />
           </div>
-          <span className="tracking-wide">CHATTER BOX</span>
+          <span className="tracking-wide max-[426px]:hidden">CHATTER BOX</span>
         </div>
 
         {/* Links */}

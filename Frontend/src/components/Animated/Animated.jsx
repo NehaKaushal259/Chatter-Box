@@ -35,7 +35,7 @@ const Animated = () => {
   }, []);
 
   return (
-    <div className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-gradient-to-br from-pink-200 via-pink-300 to-pink-400 -mt-20 z-20">
+    <div className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-gradient-to-br from-pink-200 via-pink-300 to-pink-400 -mt-20 z-20 xl:pt-32 xl:pb-26 lg:pt-28 lg:pb-20 lg:px-20 md:pt-28 md:pb-20 max-[426px]:pt-28 max-[426px]:pb-20 max-[426px]:-mt-26">
 
       {/* 🌸 Floating Emojis (Background Only) */}
       {emojis.map((emoji, i) => (

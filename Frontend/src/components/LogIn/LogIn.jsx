@@ -73,7 +73,7 @@ const LogIn = () => {
   };
 
   return (
-    <div className="relative h-screen w-full flex items-center justify-center -mt-20">
+    <div className="relative h-full w-full flex items-center justify-center -mt-20 xl:pt-32 xl:pb-26 lg:pt-28 lg:pb-20 lg:px-20 md:pt-28 md:pb-20 max-[426px]:pt-28 max-[426px]:pb-20 max-[426px]:-mt-26">
 
       {/* 🌈 Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#3b0a1e] via-[#7b1e3a] to-[#ff4d6d]"></div>

@@ -173,12 +173,12 @@ const handleSend = async () => {
 };
 
   return (
-    <div className="h-screen flex bg-gray-900 text-white -mt-20 relative">
+    <div className="h-full w-screen flex bg-gray-900 text-white -mt-20 relative">
 
       {/* 🔹 LEFT SIDEBAR */}
       <div className="w-1/3 bg-gray-800 p-4 overflow-y-auto pt-20">
 
-        <div className="h-80 ml-4">
+        <div className="h-80 ml-4 max-[426px]:ml-0">
           <h2 className="text-xl font-bold mb-4">Friends</h2>
 
           {/* Friends List */}
@@ -189,20 +189,20 @@ const handleSend = async () => {
                 setSelectedUser(f);
                 fetchMessages(f.id);
               }}
-              className="p-3 bg-gray-700 rounded-lg mb-2 cursor-pointer hover:bg-gray-600 flex mx-5"
+              className="p-3 bg-gray-700 rounded-lg mb-2 cursor-pointer hover:bg-gray-600 flex mx-5 max-[426px]:mx-0 md:mx-0 md:p-2"
             >
-              <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-red-500 text-white font-bold">
+              <div className="w-12 h-12 max-[426px]:hidden rounded-full overflow-hidden flex items-center justify-center bg-red-500 text-white font-bold">
                   {f.image ? (
                     <img
                       src={`http://127.0.0.1:8000${f.image}`}
                       alt="profile"
-                      className="w-12 h-12 object-cover"
+                      className="w-12 h-12 object-cover "
                     />
                   ) : (
                     f.name?.charAt(0).toUpperCase()
                   )}
                 </div>
-              <span className="ml-5 mt-2 text-lg capitalize">{f.name}</span>
+              <span className="ml-5 mt-2 text-lg capitalize max-[426px]:text-md max-[426px]:mt-0">{f.name}</span>
             </div>
           ))}
 
@@ -210,13 +210,13 @@ const handleSend = async () => {
 
         
         {/* Friend Suggestion */}
-        <div className=" mt-4 mb-2  h-72 p-3 relative overflow-hidden hover:overflow-y-scroll">
+        <div className=" mt-4 mb-2 h-72 p-3 relative overflow-hidden hover:overflow-y-scroll max-[426px]:px-0">
           <h2 className="text-xl font-bold mb-6">Suggestions</h2>
 
           {requests
           .filter((r) => !friends.some((f) => f.id === r.id))
           .map((r) => (
-            <div key={r.id} className="bg-gray-700 p-3 rounded-lg mb-2 flex mx-5 w-[26em]">
+            <div key={r.id} className="bg-gray-700 p-3 rounded-lg mb-2 flex mx-5 w-[26em] md:mx-0 md:p-2">
               {/* <img src={ r.image ? `http://127.0.0.1:8000${r.image}` : "https://via.placeholder.com/50"}
                 alt="profile"
                 className="w-12 h-12 rounded-full" /> */}
@@ -327,19 +327,27 @@ const handleSend = async () => {
             </div>
           </>
         ) : (
-          <div className="h-full w-[61em] m-6 mt-24 rounded-xl">
+          <div className="h-full w-[61em] lg:w-[40rem] md:w-[30rem] max-[426px]:w-[14.5rem] m-6 mt-24 rounded-xl">
             {/* <h2>Select a friend to start chatting 💬</h2> */}
 
-            <div className="absolute bottom-6 right-6 w-[61em] bg-gray-800 p-3 flex items-center gap-3 border-t border-gray-700 rounded-b-xl">
+            <div className="absolute bottom-6 right-6 w-[61em] xl:w-[57rem] lg:w-[40rem] md:w-[29rem] max-[426px]:w-[16rem] max-[426px]:right-3 bg-gray-800 p-3 flex items-center gap-3 border-t border-gray-700 rounded-b-xl">
   
                 <input
                     type="text"
                     placeholder="Enter your message..."
-                    className="flex-1 px-4 py-2 rounded-full bg-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-red-500"
+                    className="flex-1 px-4 py-2 rounded-full bg-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-red-500 max-[426px]:w-[10rem]"
                 />
 
                 <button className="bg-red-600 hover:bg-red-700 px-5 py-2 rounded-full text-white font-semibold">
-                    Send
+                  {/* Small screens */}
+                  <span className="block min-[426px]:hidden max-[426px]:py-1">
+                      S
+                  </span>
+
+                  {/* Larger screens */}
+                  <span className="hidden min-[426px]:block">
+                      Send
+                  </span>
                 </button>
 
             </div>

@@ -95,7 +95,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="relative h-screen w-full flex items-center justify-center -mt-20">
+    <div className="relative h-full w-full flex items-center justify-center -mt-20 xl:pt-28 xl:pb-18 lg:pt-28 lg:pb-20 lg:px-20 md:pt-28 md:pb-20 max-[426px]:pt-28 max-[426px]:pb-20 max-[426px]:-mt-26">
 
       {/* Background */}
       {/* <div className="absolute inset-0">

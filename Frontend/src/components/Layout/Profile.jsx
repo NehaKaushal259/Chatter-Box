@@ -20,7 +20,7 @@ const Profile = () => {
   
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center text-white -mt-20">
+    <div className="min-h-screen bg-gray-900 flex items-center justify-center text-white -mt-20 xl:pt-32 xl:pb-26 lg:pt-28 lg:pb-20 lg:px-20 md:pt-28 md:pb-20 md:px-16 max-[426px]:px-6 max-[426px]:pt-28 max-[426px]:pb-20 max-[426px]:-mt-26">
 
       {/* 🔥 Profile Card */}
       <div className="bg-white/10 backdrop-blur-xl p-8 rounded-3xl shadow-2xl w-[50em]  ">
