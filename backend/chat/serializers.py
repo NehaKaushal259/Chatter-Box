@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import SignUp
+from .models import SignUp, Message
 
 
 class SignUpSerializer(serializers.ModelSerializer):
@@ -35,3 +35,22 @@ class SignUpSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+    
+
+
+
+class MessageSerializer(serializers.ModelSerializer):
+    receiver_profile = SignUpSerializer(read_only=True)
+    sender_profile = SignUpSerializer(read_only=True)
+
+    class Meta:
+        model = Message
+        fields = ['id','sender', 'receiver', 'receiver_profile', 'sender_profile', 'message', 'is_read', 'date']
+    
+    def __init__(self, *args, **kwargs):
+        super(MessageSerializer, self).__init__(*args, **kwargs)
+        request = self.context.get('request')
+        if request and request.method=='POST':
+            self.Meta.depth = 0
+        else:
+            self.Meta.depth = 2

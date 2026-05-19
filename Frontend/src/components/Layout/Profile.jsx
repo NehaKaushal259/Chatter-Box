@@ -13,9 +13,14 @@ const Profile = () => {
     navigate("/login");
   };
 
+  // console.log(user.email);
+  // console.log(user.bio);
+  
+  // console.log(user.custom_id);
+  
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center text-white -mt-20">
+    <div className="min-h-screen bg-gray-900 flex items-center justify-center text-white -mt-20 xl:pt-32 xl:pb-26 lg:pt-28 lg:pb-20 lg:px-20 md:pt-28 md:pb-20 md:px-16 max-[426px]:px-6 max-[426px]:pt-28 max-[426px]:pb-20 max-[426px]:-mt-26">
 
       {/* 🔥 Profile Card */}
       <div className="bg-white/10 backdrop-blur-xl p-8 rounded-3xl shadow-2xl w-[50em]  ">
@@ -66,9 +71,8 @@ const Profile = () => {
 
           <div className="bg-white/10 p-3 rounded-lg">
             <p className="text-sm text-gray-300">User ID</p>
-            <p className="font-semibold">{user?.id}</p>
+            <p className="font-semibold">{user?.custom_id}</p>  
 
-            {/* <p className="font-semibold">{user?.custom_id}</p> */}
           </div>
 
           <div className="bg-white/10 p-3 rounded-lg">

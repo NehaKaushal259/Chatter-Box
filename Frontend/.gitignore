@@ -33,3 +33,10 @@ __pycache__/
 db.sqlite3
 node_modules/
 build/
+
+
+
+db.sqlite3
+__pycache__/
+*.pyc
+media/
