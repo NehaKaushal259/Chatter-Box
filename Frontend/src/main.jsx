@@ -26,8 +26,8 @@ const router = createBrowserRouter(
       <Route index element={<Main />} />
       <Route path='login' element={<LogIn />} />
       <Route path='signup' element={<SignUp />} />
-      <Route path='contact/' element={<Contact />} />
-      <Route path='complaintsdashboard' element={<Dashboard />} />
+        <Route path='contact/' element={<Contact />} /> 
+        <Route path='complaintsdashboard' element={<Dashboard />} />
       <Route path="welcome_page" element={<Animated />} />
       <Route path='forgot_password' element={<Forgot_Password />} />
       <Route path='chatPage' element={<ChatPage />} >
