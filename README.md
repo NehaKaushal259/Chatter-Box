@@ -10,12 +10,16 @@ Chatter Box was developed to improve full-stack development skills by combining 
 
 
 ## ✨ Features
+
+``` text
 🔐 User Authentication & Authorization
 💬 Real-Time Messaging System
 👤 User Profile Management
 📱 Responsive UI Design
 ⚡ Fast and Smooth Chat Experience
 🎨 Clean and Modern Interface
+
+```
 
 
 ## 🚀 Tech Stack
