@@ -46,8 +46,8 @@ The main goal of this project is to build a scalable and interactive chat platfo
 ├── Backend
     ├── backend
     ├── chat
-    ├──media
-    ├──node_modules
+    ├── media
+    ├── node_modules
     ├── db.sqlite3
     ├── index.js
     ├── manage.py
