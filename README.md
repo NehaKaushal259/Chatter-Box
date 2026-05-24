@@ -37,6 +37,15 @@ The main goal of this project is to build a scalable and interactive chat platfo
 
 ## ✨ Screenshots
 
+<p align="center">
+<img src="./images/image1.png" width="45%">
+<img src="./images/image2.png" width="45%">
+</p>
+
+<p align="center">
+<img src="./images/image3.png" width="45%">
+<img src="./images/image4.png" width="45%">
+</p>
 
 
 ## 📂 Folder Structure
