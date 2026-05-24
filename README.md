@@ -73,5 +73,6 @@ The main goal of this project is to build a scalable and interactive chat platfo
     ├── package.config.js
     ├── tailwind.config.js
     └── vite.config.js
+├── images
 └── README.md
 ```
