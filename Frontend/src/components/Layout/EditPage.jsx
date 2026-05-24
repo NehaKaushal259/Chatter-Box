@@ -69,7 +69,7 @@ const handleSubmit = async (e) => {
   }
 
   try {
-    const res = await fetch("http://127.0.0.1:8000/api/update-profile/", {
+    const res = await fetch("http://192.168.29.135:8000/api/update-profile/", {
       method: "POST",
       body: formData,
     });

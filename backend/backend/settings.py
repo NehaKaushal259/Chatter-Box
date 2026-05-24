@@ -28,7 +28,11 @@ SECRET_KEY = 'django-insecure-bm%&vu5)izn0u!4_$r&b$t#m94=(lslz$et_n7t-%xhoghwy_q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*',
+                "127.0.0.1",
+                "localhost",
+                "192.168.29.135",
+                ]
 
 
 # Application definition
@@ -57,6 +61,10 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
 
 
 AUTH_USER_MODEL = 'chat.SignUp'

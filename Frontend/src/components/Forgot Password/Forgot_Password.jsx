@@ -24,7 +24,7 @@ const Forgot_Password = () => {
     }
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/check-user/", {
+      const res = await fetch("http://192.168.29.135:8000/api/check-user/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -63,7 +63,7 @@ const Forgot_Password = () => {
     }
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/reset-password/", {
+      const res = await fetch("http://192.168.29.135:8000/api/reset-password/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -21,7 +21,7 @@ const ChatPage = () => {
   const fetchFriends = async () => {
     // const res = await fetch(`http://127.0.0.1:8000/api/friend-requests/?email=${user.email}`);
     const res = await fetch(
-      `http://127.0.0.1:8000/api/friends/?email=${user.email}`
+      `http://192.168.29.135:8000/api/friends/?email=${user.email}`
     )
     try{
       if (!res.ok) {
@@ -42,7 +42,7 @@ const ChatPage = () => {
   const fetchUsers = async () => {
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/api/users/?email=${user.email}`
+        `http://192.168.29.135:8000/api/users/?email=${user.email}`
       );
 
       if (!res.ok) {
@@ -62,7 +62,7 @@ const ChatPage = () => {
   const fetchMessages = async (friendId) => {
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/api/get-messages/${user.id}/${friendId}/`
+        `http://192.168.29.135:8000/api/get-messages/${user.id}/${friendId}/`
       );
 
       const data = await res.json();
@@ -95,36 +95,36 @@ const ChatPage = () => {
   }, [selectedUser]);
 
 
-  // const sendRequest = async (id) => {
-  //   try {
-  //     const res = await fetch("http://127.0.0.1:8000/api/send-request/", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json"
-  //       },
-  //       body: JSON.stringify({
-  //         from_email: user.email,
-  //         to_id: id,
-  //       }),
-  //     });
+  const sendRequest = async (id) => {
+    try {
+      const res = await fetch("http://192.168.29.135:8000/api/send-request/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          from_email: user.email,
+          to_id: id,
+        }),
+      });
 
-  //     if (!res.ok) {
-  //       alert("Failed to send request ❌");
-  //       return;
-  //     }
+      if (!res.ok) {
+        alert("Failed to send request ❌");
+        return;
+      }
 
-  //     alert("Request Sent ✅");
+      alert("Request Sent ✅");
 
-  //     setRequests((prev) => prev.filter((u) => u.id !== id));
+      setRequests((prev) => prev.filter((u) => u.id !== id));
 
-  //     await fetchFriends();
+      await fetchFriends();
 
-  //     window.dispatchEvent(new Event("requestUpdated"));
+      window.dispatchEvent(new Event("requestUpdated"));
 
-  //   } catch (err) {
-  //     console.error("Send Request Error:", err);
-  //   }
-  // }
+    } catch (err) {
+      console.error("Send Request Error:", err);
+    }
+  }
 
 
   
@@ -152,7 +152,7 @@ const handleSend = async () => {
   setText(""); // clear input AFTER saving
 
   try {
-    const res = await fetch("http://127.0.0.1:8000/api/send-message/", {
+    const res = await fetch("http://192.168.29.135:8000/api/send-message/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -44,7 +44,7 @@ const Profile = () => {
                 >
                     {user?.image ? (
                     <img
-                        src={user.image ? `http://127.0.0.1:8000${user.image}` : null}
+                        src={user.image ? `http://192.168.29.135:8000${user.image}` : null}
                         alt="profile"
                         className="w-full h-full object-cover"
                     />

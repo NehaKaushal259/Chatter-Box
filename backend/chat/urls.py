@@ -17,6 +17,9 @@ urlpatterns = [
     path('my-messages/<user_id>/', MyInbox.as_view()),
     path('get-messages/<sender_id>/<receiver_id>/', GetMessages.as_view(), name='get_messages'),
     path('send-message/', send_message),
+
+    path('check-user/', check_user),
+    path('reset-password/', reset_password),
 ]   
 
 

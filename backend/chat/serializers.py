@@ -53,4 +53,5 @@ class MessageSerializer(serializers.ModelSerializer):
         if request and request.method=='POST':
             self.Meta.depth = 0
         else:
-            self.Meta.depth = 2
+            # self.Meta.depth = 2
+            pass

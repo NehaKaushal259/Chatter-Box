@@ -27,8 +27,12 @@ class CustomUserManager(BaseUserManager):
     
 def generate_user_id():
     chars = string.ascii_letters + string.digits
-    return ''.join(random.choice(chars) for _ in range(6))
+    while True:
+        custom_id = ''.join(random.choice(chars) for _ in range(6))
 
+        if not SignUp.objects.filter(custom_id=custom_id).exists():
+            return custom_id
+    
 class SignUp(AbstractUser):
     username = None
     email = models.EmailField(unique=True)

@@ -39,7 +39,7 @@ const Header = () => {
     if (!user?.email) return;
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/api/friend-requests/?email=${user.email}`
+        `http://192.168.29.135:8000/api/friend-requests/?email=${user.email}`
       );
 
       let data;
@@ -81,7 +81,7 @@ const Header = () => {
 
 
   const handleResponse = async (id, action) => {
-    await fetch("http://127.0.0.1:8000/api/respond-request/", {
+    await fetch("http://192.168.29.135:8000/api/respond-request/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -206,7 +206,7 @@ const Header = () => {
                           <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-red-500 text-white font-bold">
                             {r.from_user.image ? (
                               <img
-                                src={`http://127.0.0.1:8000${r.from_user.image}`}
+                                src={`http://192.168.29.135:8000${r.from_user.image}`}
                                 alt="profile"
                                 className="w-12 h-12 object-cover"
                               />
@@ -253,7 +253,7 @@ const Header = () => {
               >
                 {user?.image ? (
                   <img
-                    src={`http://127.0.0.1:8000${user.image}`}
+                    src={`http://192.168.29.135:8000${user.image}`}
                     alt="profile"
                     className="w-full h-full object-cover"
                   />
